@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  font-family: "Lato", sans-serif;
+}
+
+.sidenav {
+  height: 100%;
+  width: 20%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color:lightgray;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 16px;
+  color: #818181;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.main {
+  margin-left: 20%;
+  font-size: 14px; 
+  padding: 0px 10px;
+}
+.content-div {
+  background: rgb(199, 230, 248);
+  margin-top: 20px;
+}
+.content-header {
+  background: ghostwhite;
+    height: 40px;
+    margin: 0px 3px;
+    font-weight: bold;
+}
+.content-main-header {
+  height: 40px;
+  padding: 0px 5px;
+  text-align: left;
+}
+.button-div{
+  height: auto;
+  width: 80px;
+  margin: 3px 3px;
+  background: yellowgreen;
+}
+.button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 6px 22px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 2px 2px;
+  cursor: pointer;
+}
+.div-padding {
+  padding: 10px 0px;
+}
+.content-body {
+  min-height: 20px;
+}
+.content-body-name {
+  min-height: 50px;
+}
+.meta-body {
+  margin: 5px 5px;
+padding-bottom: 5px;
+}
+.meta-body-temp {
+  background: black;
+  min-height: 220px;
+  min-width: 800px;
+  color: red;
+}
+
+.content-blnk{
+  height: 40px;
+}
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+</style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script>
+  var obj={
+   "apiRoutes":{
+      "pet":{
+         "GET":{
+            "description":"Get pet details by id",
+            "request":{
+               "query":{
+                  "id":{
+                     "required":true,
+                     "type":"int"
+                  }
+               },
+               "body":{
+ 
+               }
+            },
+            "response":{
+               "code":200,
+               "data":{
+                  "pet":{
+                     "id":1,
+                     "type":"Dog",
+                     "name":"Stella"
+                  }
+               }
+            }
+         },
+         "POST":{
+            "description":"Create a new pet and return id",
+            "request":{
+               "query":{
+ 
+               },
+               "body":{
+                  "pet":{
+                     "type":"Cat",
+                     "name":"Mirchi"
+                  }
+               }
+            },
+            "response":{
+               "code":200,
+               "data":{
+                  "pet":{
+                     "id":2
+                  }
+               }
+            }
+         }
+      },
+      "customers":{
+         "GET":{
+            "description":"List all customers",
+            "request":{
+               "query":{
+                "id":{
+                     "required":true,
+                     "type":"int"
+                  }
+               },
+               "body":{
+ 
+               }
+            },
+            "response":{
+               "code":200,
+               "data":{
+                  "customers":[
+                     {
+                        "id":1,
+                        "name":"John Doe"
+                     },
+                     {
+                        "id":2,
+                        "name":"Jane Doe"
+                     }
+                  ]
+               }
+            }
+         }
+      }
+   }
+}
+  function getPet() {
+
+    var requiredspan='';
+    if(obj.apiRoutes.pet.GET.request.query.id.required)
+    {
+      requiredspan='<span id="required" class="required">&nbsp;*required</span>';
+    }
+    document.getElementById("txtdescription").innerHTML = obj.apiRoutes.pet.GET.description;
+    document.getElementById("content-description").innerHTML = obj.apiRoutes.pet.GET.description;
+    document.getElementById("btn").innerHTML =Object.keys( obj.apiRoutes.pet)[0];
+    document.getElementById("contect-body").innerHTML =Object.keys(obj.apiRoutes.pet.GET.request.query)[0]+requiredspan;
+    document.getElementById("content-type").innerHTML =obj.apiRoutes.pet.GET.request.query.id.type;
+    document.getElementById("status-code").innerHTML =obj.apiRoutes.pet.GET.response.code;
+    document.getElementById("response-data").innerHTML =JSON.stringify(obj.apiRoutes.pet.GET.response.data.pet);
+    document.getElementById("request-body").hidden=true;
+  };
+  function getCostumer() {
+
+var requiredspan='';
+if(obj.apiRoutes.pet.GET.request.query.id.required)
+{
+  requiredspan='<span id="required" class="required">&nbsp;*required</span>';
+}
+document.getElementById("txtdescription").innerHTML = obj.apiRoutes.customers.GET.description;
+document.getElementById("content-description").innerHTML = obj.apiRoutes.customers.GET.description;
+document.getElementById("btn").innerHTML =Object.keys( obj.apiRoutes.customers)[0];
+document.getElementById("contect-body").innerHTML =Object.keys(obj.apiRoutes.customers.GET.request.query)[0]+requiredspan;
+document.getElementById("content-type").innerHTML =obj.apiRoutes.customers.GET.request.query.id.type;
+document.getElementById("status-code").innerHTML =obj.apiRoutes.customers.GET.response.code;
+document.getElementById("response-data").innerHTML =JSON.stringify(obj.apiRoutes.customers.GET.response.data.customers);
+document.getElementById("request-body").hidden=true;
+};
+function postPet() {
+
+var requiredspan='<span id="required" class="required">&nbsp;*required</span>';
+document.getElementById("request-body").hidden=false;
+document.getElementById("txtdescription").innerHTML = obj.apiRoutes.pet.POST.description;
+document.getElementById("content-description").innerHTML = obj.apiRoutes.pet.POST.description;
+document.getElementById("btn").innerHTML =Object.keys( obj.apiRoutes.pet)[1];
+document.getElementById("contect-body").innerHTML =Object.keys(obj.apiRoutes.pet.POST.request.body)[0]+requiredspan;
+document.getElementById("content-type").innerHTML ="object";
+document.getElementById("status-code").innerHTML =obj.apiRoutes.pet.POST.response.code;
+document.getElementById("request-data").innerText =JSON.stringify(obj.apiRoutes.pet.POST.request.body.pet) ;
+document.getElementById("response-data").innerText =JSON.stringify(obj.apiRoutes.pet.POST.response.data.pet) ;
+
+};
+  </script>
+</head>
+<body>
+
+<div class="sidenav">
+  <a href="#about" onclick="getPet()">Get/pet</a>
+  <a href="#services" onclick="postPet()">Post/pet</a>
+  <a href="#clients" onclick="getCostumer()">Get/Costumer</a>
+</div>
+
+<div class="main">
+  <div class="content-div">
+    <div class="content-main-header row">
+      <div class="col-md-1">
+        <a id="btn" class="button">
+          Post
+        </a>
+      </div>
+     <div>
+      <p id='txtdescription' class="col-md-10 div-padding">This sidebar is of full height</p>
+     </div>
+      
+      </div>
+      <div class="content-header">
+        <p class=" div-padding" style="margin-left: 5px;">Parameters</p>
+      </div>
+      <div class="content-body-name  row">
+        <div class="col-md-2" style="text-align: center; margin-top: 20px;">
+            Name
+        </div>
+        <div class="col-md-9 "  style="text-align:left; margin-top: 20px;">
+          Descrption
+       </div>
+      </div>
+      <div class="content-body row">
+        <div id="contect-body" class="col-md-2 required" style="text-align:center; margin-top: 20px;">
+          body
+          <span id="required" class="required">&nbsp;*required</span>
+        </div>
+        <div class="col-md-9 ">
+         
+       </div>
+    
+      </div>
+      <div id="content-detail" class="content-body row">
+        <div id='content-type' class="col-md-2 required" style="text-align:center; margin-top: 20px;">
+          object
+        </div>
+        <div id="content-description" class="col-md-9 " style="text-align:left; margin-top: 20px;">
+          Create new pet and return
+        </div>
+       </div>
+      <div id="request-body" class="meta-body row">
+       <div class="col-md-2">
+
+       </div>
+       <div class="col-md-9 ">
+       <textarea id="request-data" type="text" class="meta-body-temp"></textarea>
+      </div>
+      
+      </div>
+      <div class="content-blnk">
+
+      </div>
+      <div class="content-header">
+        <p class=" div-padding" style="margin-left: 5px;">Response</p>
+      </div>
+      <div class="content-body-name  row">
+        <div class="col-md-2" style="text-align: center; margin-top: 20px;">
+            Code
+        </div>
+        <div class="col-md-9 "  style="text-align:left; margin-top: 20px;">
+          Descrption
+       </div>
+      </div>
+      <div class="content-body row">
+        <div class="col-md-2" style="text-align:center; margin-top: 20px;">
+          <p id="status-code">200</p>
+        </div>
+        <div class="col-md-9 ">
+ 
+       </div>
+      </div>
+      <div class="meta-body row">
+       <div class="col-md-2">
+
+       </div>
+       <div class="col-md-9 ">
+       <textarea id="response-data" type="text" class="meta-body-temp"></textarea>
+      </div>
+      
+      </div>
+    </div>
+    
+    </div>
+  
+
+  </div>
+  
+</div>
+   
+</body>
+</html> 
